@@ -28,7 +28,6 @@ RUN apk --no-cache add \
         g++ \
         make \
         gcc \
-        docker \
     && /usr/bin/pip2 install 'virtualenv' \
     && rm -rf /var/cache/apk
 
@@ -45,7 +44,7 @@ RUN /ansible/bin/pip2 install 'ansible' \
 FROM alpine:3.6
 ARG USER=ansible
 
-RUN apk add --no-cache python bind-tools gnupg openssh docker
+RUN apk add --no-cache python gnupg openssh
 
 RUN adduser -D -u 1000 -h /home/$USER $USER users
 
