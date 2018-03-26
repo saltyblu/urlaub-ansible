@@ -28,6 +28,7 @@ RUN apk --no-cache add \
         g++ \
         make \
         gcc \
+        docker \
     && /usr/bin/pip2 install 'virtualenv' \
     && rm -rf /var/cache/apk
 
@@ -37,10 +38,14 @@ ENV VIRTUAL_ENV=/ansible
 ENV PATH=${VIRTUAL_ENV}/bin:${PATH}
 ENV PYTHONHOME+_=""
 
-RUN /ansible/bin/pip2 install 'ansible==2.4.0'
+RUN /ansible/bin/pip2 install 'ansible' \
+    'apache-libcloud' \
+    'docker-py'
 
 FROM alpine:3.6
 ARG USER=ansible
+
+RUN apk add --no-cache python bind-tools gnupg openssh docker
 
 RUN adduser -D -u 1000 -h /home/$USER $USER users
 
@@ -54,4 +59,3 @@ ENV PATH=${VIRTUAL_ENV}/bin:${PATH}
 ENV PYTHONHOME+_=
 
 WORKDIR /home/$USER/playbook
-ENTRYPOINT [ "ansible" ]
