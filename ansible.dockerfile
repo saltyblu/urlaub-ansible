@@ -38,8 +38,7 @@ ENV PATH=${VIRTUAL_ENV}/bin:${PATH}
 ENV PYTHONHOME+_=""
 
 RUN /ansible/bin/pip2 install 'ansible' \
-    'apache-libcloud' \
-    'docker-py'
+    'apache-libcloud'
 
 FROM alpine:3.6
 ARG USER=ansible
